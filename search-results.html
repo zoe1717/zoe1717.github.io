@@ -32,58 +32,35 @@
     <div class="container mt-5 pt-5">
         <h2>搜尋結果</h2>
 
-        <!-- 搜尋結果區域 -->
-        <div id="searchResults">
-            <!-- 這裡會顯示搜尋結果 -->
-        </div>
-    </div>
+        <!-- 根據搜尋條件跳轉到相應的頁面 -->
+        <script>
+            // 獲取 URL 中的搜尋關鍵字
+            const urlParams = new URLSearchParams(window.location.search);
+            const query = urlParams.get('query');
 
-    <script>
-        // 獲取 URL 中的搜尋關鍵字
-        const urlParams = new URLSearchParams(window.location.search);
-        const query = urlParams.get('query');
+            // 定義搜尋對應的頁面
+            const pages = {
+                "1008": "./1008/1008_namecard.html",
+                "1015": "./1015/index.html",
+                "1022": "./1022/index.html",
+                "1105": "./1105/index.html",
+                "1112": "./1112/index.html",
+                "1126": "./1126/index.html",
+                "1126-bonus": "./1126-bonus/index.html",
+                "1203": "./1203/index.html",
+                "1203-bonus": "./1203-bonus/index.html"
+            };
 
-        // 如果沒有 query 參數，則不顯示搜尋結果
-        if (!query) {
-            document.getElementById('searchResults').innerHTML = '<p>請輸入搜尋關鍵字。</p>';
-        } else {
-            // 假設的資料，這裡可以改成動態獲取或使用資料庫
-            const data = [
-                { title: "1008", description: "名片設計", link: "./1008/1008_namecard.html" },
-                { title: "1015", description: "一針的照片", link: "./1015/index.html" },
-                { title: "1022", description: "唐詩", link: "./1022/index.html" },
-                { title: "1105", description: "五首唐詩", link: "./1105/index.html" },
-                { title: "1112", description: "網站", link: "./1112/index.html" },
-                { title: "1126", description: "Bootstrap元件", link: "./1126/index.html" },
-                { title: "1126-bonus", description: "導覽與標籤頁", link: "./1126-bonus/index.html" },
-                { title: "1203", description: "Bootstrap元件2", link: "./1203/index.html" },
-                { title: "1203-bonus", description: "手風琴效果", link: "./1203-bonus/index.html" }
-            ];
-
-            // 根據搜尋關鍵字過濾資料
-            const results = data.filter(item => item.title.includes(query) || item.description.includes(query));
-
-            // 顯示搜尋結果
-            const resultContainer = document.getElementById("searchResults");
-
-            if (results.length > 0) {
-                results.forEach(result => {
-                    const resultElement = document.createElement("div");
-                    resultElement.classList.add("card", "mb-3");
-                    resultElement.innerHTML = `
-                        <div class="card-body">
-                            <h5 class="card-title">${result.title}</h5>
-                            <p class="card-text">${result.description}</p>
-                            <a href="${result.link}" class="btn btn-primary">查看</a>
-                        </div>
-                    `;
-                    resultContainer.appendChild(resultElement);
-                });
+            // 根據查詢關鍵字跳轉
+            if (query && pages[query]) {
+                window.location.href = pages[query]; // 跳轉到對應頁面
             } else {
-                resultContainer.innerHTML = `<p>沒有找到與 "${query}" 相關的結果。</p>`;
+                document.getElementById("searchResults").innerHTML = `<p>找不到與 "${query}" 相關的頁面。</p>`;
             }
-        }
-    </script>
+        </script>
+
+        <div id="searchResults"></div>
+    </div>
 </body>
 
 </html>
